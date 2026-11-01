@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ร้านค้า | Growth Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=tanker@400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="ci/logomark-deepblue-web.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="mock-bar">ม็อกอัปคลิกได้ (ไม่ใช่เว็บจริง) · ป้าย <b>“ตัวอย่าง”</b> = ข้อมูลสมมติ · อย่าเพิ่งลงมือบน WordPress</div>
+<header>
+ <div class="wrap nav">
+  <a class="brand" href="index.html"><img src="ci/logo-primary-deepblue-web.png" alt="Growth Game"></a>
+  <ul class="menu">
+   <li><a href="index.html">หน้าแรก</a></li><li><a href="#">บริการ</a></li><li><a href="courses.html">คอร์สเรียน</a></li><li><a href="events.html">กิจกรรม</a></li><li><a href="#">ผลงาน</a></li><li><a href="#">บทความ</a></li><li><a href="index.html#contact">ติดต่อ</a></li><li><a href="dashboard.html">บัญชีของฉัน</a></li>
+  </ul>
+  <a class="cart-btn" href="shop.html" title="ตะกร้า">🛒<span class="cart-count" data-cart-count>0</span></a>
+  <a class="btn btn-primary btn-sm" href="courses.html">สมัครคอร์ส</a>
+  <button class="burger" aria-label="เมนู">☰</button>
+ </div>
+</header>
+
+<main>
+<div class="page-hero">
+ <div class="wrap">
+  <div class="crumb"><a href="index.html">หน้าแรก</a> / ร้านค้า</div>
+  <h1>ร้านค้า / หนังสือ</h1>
+  <p>หนังสือ สินค้าส่งถึงบ้าน และไฟล์ดิจิทัลดาวน์โหลดทันที · ราคาและปกเป็นตัวอย่างจนกว่าจะใส่ของจริง</p>
+ </div>
+</div>
+<section>
+ <div class="wrap">
+  <div class="chip-row">
+   <button type="button" class="chip active" data-chip="all">ทั้งหมด</button>
+   <button type="button" class="chip" data-chip="books">หนังสือ</button>
+   <button type="button" class="chip" data-chip="cards">การ์ดและชุดเครื่องมือ</button>
+   <button type="button" class="chip" data-chip="digital">ไฟล์ดิจิทัล (Canvas &amp; การ์ด)</button>
+   <button type="button" class="chip" data-chip="bundle">ชุดสุดคุ้ม</button>
+  </div>
+
+  <div class="grid g3" id="shop-grid">
+   <div class="card" data-cat="books">
+    <a href="product.html" style="text-decoration:none;color:inherit">
+     <div class="book-cover c1"><span class="vol">BOOK 01</span><div class="btitle">เกมมิฟิเคชัน<br>จูงใจคนด้วยกลไกเกม</div><div class="bauthor">ตรัง สุวรรณศิลป์</div></div>
+    </a>
+    <div class="row-top"><span class="badge-ship">ส่งถึงบ้าน</span><span class="tag">ตัวอย่าง</span></div>
+    <h3 style="margin-top:10px">เกมมิฟิเคชัน จูงใจคนด้วยกลไกเกม</h3>
+    <p>หนังสือเล่มแรก · พื้นฐานเกมมิฟิเคชันสำหรับองค์กรและทีม</p>
+    <p class="price">ราคา (ตัวอย่าง)</p>
+    <a class="btn btn-outline btn-sm" href="product.html">ดูรายละเอียด</a>
+   </div>
+
+   <div class="card" data-cat="books">
+    <a href="product.html" style="text-decoration:none;color:inherit">
+     <div class="book-cover c2"><span class="vol">BOOK 02</span><div class="btitle">เกมมิฟิเคชัน 2<br>Goal–Gap–Gamify</div><div class="bauthor">ตรัง สุวรรณศิลป์</div></div>
+    </a>
+    <div class="row-top"><span class="badge-ship">ส่งถึงบ้าน</span><span class="tag">ตัวอย่าง</span></div>
+    <h3 style="margin-top:10px">เกมมิฟิเคชัน 2 : Goal-Gap-Gamify</h3>
+    <p>หนังสือเล่มสอง · กรอบคิด 3 ขั้นที่เปลี่ยนเป้าหมายเป็นพฤติกรรม</p>
+    <p class="price">ราคา (ตัวอย่าง)</p>
+    <a class="btn btn-primary btn-sm" href="product.html">ดูรายละเอียด →</a>
+   </div>
+
+   <div class="card example" data-cat="books">
+    <div class="book-cover coming"><span class="vol" style="color:var(--lilac)">BOOK 03</span><div class="btitle">หนังสือเล่มที่ 3<br>เร็วๆ นี้</div><div class="bauthor">กำลังเขียนอยู่</div></div>
+    <div class="row-top"><span class="tag tag-live">เร็วๆ นี้</span><span class="tag">ตัวอย่าง</span></div>
+    <h3 style="margin-top:10px">หนังสือเล่มที่ 3</h3>
+    <p>ผมกำลังเขียนเล่มใหม่ · รายละเอียดและชื่อเรื่องยังไม่ประกาศ</p>
+    <p class="price" style="font-size:16px;color:var(--muted)">ยังไม่เปิดขาย</p>
+    <a class="btn btn-outline btn-sm" href="app.html#notify">รับแจ้งเตือน</a>
+   </div>
+
+   <div class="card example" data-cat="cards">
+    <div class="book-cover c3" style="aspect-ratio:4/3"><span class="vol">TOOLKIT</span><div class="btitle">ชุดการ์ด Gamification<br>(กายภาพ)</div><div class="bauthor">ส่งถึงบ้าน · ตัวอย่าง</div></div>
+    <div class="row-top"><span class="badge-ship">ส่งถึงบ้าน</span><span class="tag">ตัวอย่าง</span></div>
+    <h3 style="margin-top:10px">ชุดการ์ดเกมมิฟิเคชัน (กายภาพ)</h3>
+    <p>การ์ดกลไกเกมสำหรับเวิร์กช็อป · จำนวนใบและรายละเอียดยังไม่กำหนด</p>
+    <p class="price">ราคา (ตัวอย่าง)</p>
+    <a class="btn btn-outline btn-sm" href="product.html">ดูรายละเอียด</a>
+   </div>
+
+   <div class="card example" data-cat="digital">
+    <a href="product-digital.html" style="text-decoration:none;color:inherit">
+     <div class="book-cover digital"><span class="vol">DIGITAL PDF</span><div class="btitle">Gamification Card Set<br>(ไฟล์ PDF)</div><div class="bauthor">ดาวน์โหลดทันที · ตัวอย่าง</div></div>
+    </a>
+    <div class="row-top"><span class="badge-dl">ดาวน์โหลดทันที</span><span class="tag">ตัวอย่าง</span></div>
+    <h3 style="margin-top:10px">ชุดการ์ดเกมมิฟิเคชัน (PDF)</h3>
+    <p>ไฟล์ดิจิทัลพิมพ์เองได้ · หลังชำระเงินดาวน์โหลดได้ทันทีในบัญชีของฉัน</p>
+    <p class="price">ราคา (ตัวอย่าง)</p>
+    <a class="btn btn-outline btn-sm" href="product-digital.html">ดูรายละเอียด</a>
+   </div>
+
+   <div class="card example" data-cat="digital">
+    <a href="product-digital.html" style="text-decoration:none;color:inherit">
+     <div class="book-cover digital" style="background:linear-gradient(160deg,var(--violet),#1a6a86)"><span class="vol">CANVAS</span><div class="btitle">GoalGapGamify<br>Canvas Template</div><div class="bauthor">PDF / Canva · ตัวอย่าง</div></div>
+    </a>
+    <div class="row-top"><span class="badge-dl">ดาวน์โหลดทันที</span><span class="tag">ตัวอย่าง</span></div>
+    <h3 style="margin-top:10px">GoalGapGamify Canvas Template</h3>
+    <p>เทมเพลต canvas 1 หน้า สำหรับออกแบบ Goal → Gap → Gamify</p>
+    <p class="price">ราคา (ตัวอย่าง)</p>
+    <a class="btn btn-primary btn-sm" href="product-digital.html">ดูรายละเอียด →</a>
+   </div>
+
+   <div class="card example" data-cat="bundle books digital">
+    <div class="book-cover bundle"><span class="vol">BUNDLE</span><div class="btitle">หนังสือ 2 เล่ม<br>+ คอร์สออนไลน์</div><div class="bauthor">ชุดสุดคุ้ม · ตัวอย่าง</div></div>
+    <div class="row-top"><span class="badge-ship">ส่งถึงบ้าน</span> <span class="badge-dl">+ ดิจิทัล</span><span class="tag">ตัวอย่าง</span></div>
+    <h3 style="margin-top:10px">ชุดหนังสือ 2 เล่ม + คอร์สออนไลน์</h3>
+    <p>ตัวอย่างแพ็กเกจ · รายการในชุดและราคายังไม่ล็อก</p>
+    <p class="price">ราคา (ตัวอย่าง)</p>
+    <a class="btn btn-outline btn-sm" href="courses.html">ดูคอร์สที่เกี่ยวข้อง</a>
+   </div>
+  </div>
+
+  <p style="margin-top:28px;font-size:13px;color:var(--muted)">ของจริงจะขายผ่าน WooCommerce บนเว็บหลัก · สินค้ากายภาพมีค่าจัดส่ง · ไฟล์ดิจิทัลขึ้นใน <a class="link" href="dashboard.html">บัญชีของฉัน → ไฟล์ของฉัน</a> หลังชำระเงิน</p>
+ </div>
+</section>
+</main>
+<footer>
+ <div class="wrap foot">
+  <div class="foot-brand">
+   <img src="ci/logo-primary-lightgray-web.png" alt="Growth Game">
+   <div class="en">MOVE WITH MOTIVATION</div>
+   <small>Growth Game Co., Ltd. · Nonthaburi · growthgame.co</small>
+   <small>ม็อกอัปนี้สำหรับคุย flow เท่านั้น — ยังไม่แตะเว็บจริง</small>
+  </div>
+  <div class="foot-links">
+   <a href="courses.html">คอร์สเรียน</a>
+   <a href="events.html">กิจกรรม</a>
+   <a href="app.html">แอปออกแบบ Gamification</a>
+   <a href="shop.html">ร้านค้า / หนังสือ</a>
+   <a href="dashboard.html">บัญชีของฉัน</a>
+   <a href="index.html#contact">ติดต่อ</a>
+  </div>
+ </div>
+</footer>
+<script src="app.js"></script>
+</body></html>

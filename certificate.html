@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ใบรับรอง | Growth Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=tanker@400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="ci/logomark-deepblue-web.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="mock-bar">ม็อกอัปคลิกได้ (ไม่ใช่เว็บจริง) · ป้าย <b>“ตัวอย่าง”</b> = ข้อมูลสมมติ · อย่าเพิ่งลงมือบน WordPress</div>
+<header>
+ <div class="wrap nav">
+  <a class="brand" href="index.html"><img src="ci/logo-primary-deepblue-web.png" alt="Growth Game"></a>
+  <ul class="menu">
+   <li><a href="index.html">หน้าแรก</a></li><li><a href="#">บริการ</a></li><li><a href="courses.html">คอร์สเรียน</a></li><li><a href="events.html">กิจกรรม</a></li><li><a href="#">ผลงาน</a></li><li><a href="#">บทความ</a></li><li><a href="index.html#contact">ติดต่อ</a></li><li><a href="dashboard.html" class="active">บัญชีของฉัน</a></li>
+  </ul>
+  <a class="cart-btn" href="shop.html" title="ตะกร้า">🛒<span class="cart-count" data-cart-count>0</span></a>
+  <a class="btn btn-primary btn-sm" href="courses.html">สมัครคอร์ส</a>
+  <button class="burger" aria-label="เมนู">☰</button>
+ </div>
+</header>
+
+<main>
+<div class="page-hero">
+ <div class="wrap">
+  <div class="crumb"><a href="dashboard.html">บัญชีของฉัน</a> / ใบรับรอง</div>
+  <h1>ใบรับรองของคุณ</h1>
+  <p>ตัวอย่าง Certificate หลังจบ Gamification Masterclass · ตรวจได้ด้วยรหัสยืนยัน</p>
+ </div>
+</div>
+<div class="wrap cert-wrap">
+ <div class="cert">
+  <div class="cert-top">
+   <img src="ci/logo-primary-deepblue-web.png" alt="Growth Game">
+   <div class="en" style="color:var(--lilac);font-size:14px">MOVE WITH MOTIVATION</div>
+  </div>
+  <div class="cert-body">
+   <div class="label">Certificate of Completion</div>
+   <h2>ใบรับรองการสำเร็จหลักสูตร</h2>
+   <p style="margin:0;color:var(--muted);font-size:14px">มอบให้แก่</p>
+   <div class="name">คุณตัวอย่าง สมมติ</div>
+   <p style="margin:0;color:var(--muted);font-size:14px">สำหรับการสำเร็จหลักสูตร</p>
+   <div class="course-name">Gamification Masterclass</div>
+   <p style="font-size:13px;color:var(--muted);margin:8px 0 0">วันที่สำเร็จ: 28 มีนาคม 2027 · วิทยากร: ตรัง สุวรรณศิลป์</p>
+  </div>
+  <div class="cert-foot">
+   <div>
+    <div>รหัสยืนยัน</div>
+    <b style="color:var(--deep)">GG-MC-2027-0042</b>
+    <div style="margin-top:4px">growthgame.co/verify/GG-MC-2027-0042</div>
+   </div>
+   <div class="sig">
+    <b>ตรัง สุวรรณศิลป์</b>
+    ผู้ก่อตั้ง Growth Game
+   </div>
+  </div>
+  <img class="cert-mark" src="ci/logomark-deepblue-web.png" alt="">
+ </div>
+ <div>
+  <div class="card" style="margin-bottom:16px">
+   <h3>แชร์ใบรับรอง</h3>
+   <p>ปุ่มด้านล่างเป็นม็อก — ยังไม่โพสต์ LinkedIn จริง</p>
+   <button class="btn btn-navy btn-block" type="button" onclick="ggToast('แชร์ LinkedIn (ม็อก) — ยังไม่โพสต์จริง')">in แชร์ไป LinkedIn</button>
+   <button class="btn btn-outline btn-block" style="margin-top:8px" type="button" onclick="ggToast('คัดออกลิงก์ยืนยันแล้ว (ม็อก)')">คัดออกลิงก์ยืนยัน</button>
+  </div>
+  <div class="card">
+   <h3>รายละเอียด</h3>
+   <ul style="font-size:14px">
+    <li>หลักสูตร: Gamification Masterclass</li>
+    <li>ระยะเวลา: 2 วัน + Online Lab</li>
+    <li>ออกโดย: Growth Game Co., Ltd.</li>
+    <li><span class="tag">ตัวอย่าง</span> ชื่อ/วันที่เป็นข้อมูลสมมติ</li>
+   </ul>
+   <a class="link" href="dashboard.html">← กลับบัญชีของฉัน</a>
+  </div>
+  <p class="hint" style="margin-top:16px">ในของจริง Certificate ออกผ่าน Tutor LMS Pro · ตรวจได้ด้วย verification ID</p>
+ </div>
+</div>
+<div id="toast" class="toast"></div>
+</main>
+<footer>
+ <div class="wrap foot">
+  <div class="foot-brand">
+   <img src="ci/logo-primary-lightgray-web.png" alt="Growth Game">
+   <div class="en">MOVE WITH MOTIVATION</div>
+   <small>Growth Game Co., Ltd. · Nonthaburi · growthgame.co</small>
+   <small>ม็อกอัปนี้สำหรับคุย flow เท่านั้น — ยังไม่แตะเว็บจริง</small>
+  </div>
+  <div class="foot-links">
+   <a href="courses.html">คอร์สเรียน</a>
+   <a href="events.html">กิจกรรม</a>
+   <a href="app.html">แอปออกแบบ Gamification</a>
+   <a href="shop.html">ร้านค้า / หนังสือ</a>
+   <a href="dashboard.html">บัญชีของฉัน</a>
+   <a href="index.html#contact">ติดต่อ</a>
+  </div>
+ </div>
+</footer>
+<script src="app.js"></script>
+</body></html>
