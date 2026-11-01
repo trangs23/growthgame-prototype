@@ -1,0 +1,124 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "features": {
+    "networking": true
+  },
+  "login": true,
+  "siteOptions": {
+    "blogname": "Growth Game (ทดสอบ)",
+    "blogdescription": "สำเนาทดสอบ — ไม่ใช่เว็บจริง growthgame.co",
+    "timezone_string": "Asia/Bangkok",
+    "permalink_structure": "/%postname%/"
+  },
+  "steps": [
+    {
+      "step": "setSiteLanguage",
+      "language": "th"
+    },
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "wordpress.org/themes",
+        "slug": "twentytwentyfive"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "woocommerce"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "tutor"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "gamipress"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "url",
+        "url": "https://raw.githubusercontent.com/trangs23/growthgame-prototype/main/playground/gg-seed.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "url",
+        "url": "https://raw.githubusercontent.com/trangs23/growthgame-prototype/main/playground/growthgame-theme.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "mkdir",
+      "path": "/wordpress/wp-content/uploads/gg-seed"
+    },
+    {
+      "step": "unzip",
+      "zipFile": {
+        "resource": "url",
+        "url": "https://raw.githubusercontent.com/trangs23/growthgame-prototype/main/playground/gg-seed.zip"
+      },
+      "extractToPath": "/tmp/gg-seed-extract"
+    },
+    {
+      "step": "cp",
+      "fromPath": "/tmp/gg-seed-extract/gg-seed/sample-canvas.pdf",
+      "toPath": "/wordpress/wp-content/uploads/gg-seed/sample-canvas.pdf"
+    },
+    {
+      "step": "cp",
+      "fromPath": "/tmp/gg-seed-extract/gg-seed/logo.png",
+      "toPath": "/wordpress/wp-content/uploads/gg-seed/logo.png"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\nrequire_once '/wordpress/wp-load.php';\nputenv('GG_ADMIN_PASS=GgDemoAdmin2026!');\nputenv('GG_LEARNER_PASS=GgDemoLearner2026!');\n$_ENV['GG_ADMIN_PASS']='GgDemoAdmin2026!';\n$_ENV['GG_LEARNER_PASS']='GgDemoLearner2026!';\nif (function_exists('gg_seed_run')) {\n  gg_seed_run();\n  update_option('gg_seed_version', defined('GG_SEED_VERSION') ? GG_SEED_VERSION : '1.0.0');\n  echo 'SEED_OK';\n} else {\n  echo 'SEED_MISSING';\n}\n"
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "Growth Game (ทดสอบ)",
+        "blogdescription": "สำเนาทดสอบ — ไม่ใช่เว็บจริง growthgame.co",
+        "woocommerce_coming_soon": "no",
+        "woocommerce_currency": "THB"
+      }
+    },
+    {
+      "step": "login",
+      "username": "ggadmin",
+      "password": "GgDemoAdmin2026!"
+    }
+  ]
+}

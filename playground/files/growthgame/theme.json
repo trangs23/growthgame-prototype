@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+  "version": 3,
+  "settings": {
+    "color": {
+      "palette": [
+        { "slug": "deep-blue", "name": "Deep Blue", "color": "#132042" },
+        { "slug": "light-blue", "name": "Light Blue", "color": "#8FD0EA" },
+        { "slug": "light-gray", "name": "Light Gray", "color": "#ECECEE" },
+        { "slug": "lilac-glow", "name": "Lilac Glow", "color": "#5D68D8" },
+        { "slug": "violet", "name": "Violet", "color": "#343273" },
+        { "slug": "accent-yellow", "name": "Accent Yellow", "color": "#DDD94A" },
+        { "slug": "white", "name": "White", "color": "#FFFFFF" }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "fontFamily": "Kanit, Poppins, system-ui, sans-serif",
+          "name": "Growth Game",
+          "slug": "growth-game"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": { "background": "#FFFFFF", "text": "#132042" },
+    "typography": { "fontFamily": "var(--wp--preset--font-family--growth-game)" },
+    "elements": {
+      "button": {
+        "color": { "background": "#5D68D8", "text": "#FFFFFF" },
+        "border": { "radius": "999px" }
+      },
+      "link": { "color": { "text": "#5D68D8" } }
+    }
+  }
+}
