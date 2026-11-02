@@ -112,3 +112,98 @@
     });
   }
 })();
+
+/* === coming-soon playful === */
+(function(){
+  if(!document.body.classList.contains('page-soon')) return;
+  const lang = document.body.getAttribute('data-soon-lang') || 'th';
+  const lines = lang === 'en' ? [
+    'Loading 99%… that last 1% is the boss fight',
+    'Mushroom asked for “just one more snack quest.” Suspicious.',
+    'Achievement unlocked: Curious Visitor — you arrived before the mushroom',
+    'Please stand by. XP is buffering… emotionally.',
+    'Don’t refresh — it might drop back to 98% out of spite',
+    'Courses & events are AFK. Mushroom is “optimizing vibes.”'
+  ] : [
+    'เห็ดขอแอบเก็บเลเวลแป๊บ อย่าเพิ่งเร่งนะ เดี๋ยวโกรธ',
+    'Loading 99%… อีก 1% นี่แหละยากสุด',
+    'Achievement unlocked: คนขี้สงสัย — คุณมาเร็วกว่าเห็ด',
+    'ระบบกำลังฟาร์ม XP… ค้างที่ 99% (สงสัยแอบทำเควสต์ของว่าง)',
+    'อย่าเพิ่งรีเฟรช เดี๋ยวหลุดเซฟแล้วหล่นเหลือ 98%',
+    'คอร์สกับกิจกรรมขอ AFK ก่อน เห็ดกำลัง “ปรับบาลานซ์ความน่ารัก”'
+  ];
+  const pokeLines = lang === 'en' ? [
+    'Hey! Soft poke only. Cap is delicate.',
+    'Squish logged. XP still 99%. Rude.',
+    'Stop speedrunning my level-up!',
+    'That tickles. Still not 100% though.'
+  ] : [
+    'เฮ้ย! จิ้มเบา ๆ หน่อย หมวกยังอ่อนอยู่',
+    'บันทึกการบีบแล้ว — XP ยัง 99% อยู่ดี ใจร้าย',
+    'อย่าสปีดรันเลเวลของเห็ดสิ!',
+    'คันนะ… แต่ยังไม่ครบ 100% อยู่ดี'
+  ];
+  const lineEl = document.getElementById('soon-line');
+  const mush = document.getElementById('soon-mush');
+  const xp = document.getElementById('soon-xp');
+  const pct = document.getElementById('soon-pct');
+  let i = 0;
+  function setLine(text, markDraft){
+    if(!lineEl) return;
+    lineEl.classList.add('is-swap');
+    setTimeout(()=>{
+      lineEl.innerHTML = text + (markDraft ? ' <span class="draft-note">'+(lang==='en'?'draft':'ร่าง')+'</span>' : '');
+      lineEl.classList.remove('is-swap');
+    }, 180);
+  }
+  setInterval(()=>{
+    i = (i+1) % lines.length;
+    setLine(lines[i], true);
+    if(xp){
+      xp.classList.remove('jiggle');
+      void xp.offsetWidth;
+      xp.classList.add('jiggle');
+    }
+    if(pct){
+      pct.textContent = '99%';
+      setTimeout(()=>{ pct.textContent = '99.9%?'; }, 180);
+      setTimeout(()=>{ pct.textContent = '99%'; }, 520);
+    }
+  }, 4200);
+
+  // visit achievement toast
+  function showAchieve(tag, msg){
+    let el = document.getElementById('gg-achieve');
+    if(!el){
+      el = document.createElement('div');
+      el.id = 'gg-achieve';
+      el.className = 'gg-achieve';
+      el.innerHTML = '<span class="tag"></span><span class="msg"></span>';
+      document.body.appendChild(el);
+    }
+    el.querySelector('.tag').textContent = tag;
+    el.querySelector('.msg').textContent = msg;
+    el.classList.add('show');
+    setTimeout(()=>el.classList.remove('show'), 3200);
+  }
+  setTimeout(()=>{
+    if(lang==='en') showAchieve('ACHIEVEMENT UNLOCKED', 'Curious Visitor — you showed up before the mushroom finished grinding.');
+    else showAchieve('ACHIEVEMENT UNLOCKED', 'คนขี้สงสัย — คุณมาเร็วกว่าเห็ดที่ยังค้าง 99%');
+  }, 700);
+
+  let poke = 0;
+  if(mush){
+    mush.addEventListener('click', ()=>{
+      poke++;
+      mush.classList.remove('squish','jump');
+      void mush.offsetWidth;
+      mush.classList.add(poke % 2 ? 'squish' : 'jump');
+      setLine(pokeLines[poke % pokeLines.length], true);
+      if(xp){ xp.classList.remove('jiggle'); void xp.offsetWidth; xp.classList.add('jiggle'); }
+      if(poke === 3){
+        if(lang==='en') showAchieve('SECRET POKE', 'Mushroom respect +1. Courses still loading.');
+        else showAchieve('อีสเตอร์เอ้ก', 'เห็ดให้หัวใจ +1 · คอร์สยังโหลดอยู่ดี');
+      }
+    });
+  }
+})();

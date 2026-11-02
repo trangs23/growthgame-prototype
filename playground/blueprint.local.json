@@ -63,6 +63,16 @@
     {
       "step": "installPlugin",
       "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "polylang"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
         "resource": "bundled",
         "path": "gg-seed.zip"
       },
@@ -104,6 +114,11 @@
     },
     {
       "step": "cp",
+      "fromPath": "/tmp/gg-seed-extract/gg-seed/mushroom.png",
+      "toPath": "/wordpress/wp-content/uploads/gg-seed/mushroom.png"
+    },
+    {
+      "step": "cp",
       "fromPath": "/tmp/gg-seed-extract/gg-seed/hero-notebook.jpeg",
       "toPath": "/wordpress/wp-content/uploads/gg-seed/hero-notebook.jpeg"
     },
@@ -124,7 +139,7 @@
     },
     {
       "step": "runPHP",
-      "code": "<?php\nrequire_once '/wordpress/wp-load.php';\nputenv('GG_ADMIN_PASS=N9F52WNZfSKNN607');\nputenv('GG_LEARNER_PASS=RKxnA1pNHvD39bt5');\n$_ENV['GG_ADMIN_PASS']='N9F52WNZfSKNN607';\n$_ENV['GG_LEARNER_PASS']='RKxnA1pNHvD39bt5';\nif (function_exists('gg_seed_run')) {\n  gg_seed_run();\n  if (function_exists('gg_seed_refresh_home')) { gg_seed_refresh_home(); }\n  update_option('gg_seed_version', defined('GG_SEED_VERSION') ? GG_SEED_VERSION : '1.1.0');\n  echo 'SEED_OK';\n} else {\n  echo 'SEED_MISSING';\n}\n"
+      "code": "<?php\n$src='/wordpress/wp-content/plugins/gg-seed/articles';\n$dst='/wordpress/wp-content/uploads/gg-seed/articles';\nif (is_dir($src)) {\n  if (!is_dir($dst)) { mkdir($dst, 0777, true); }\n  foreach (scandir($src) as $f) {\n    if ($f==='.'||$f==='..') continue;\n    if (is_file(\"$src/$f\")) { @copy(\"$src/$f\", \"$dst/$f\"); }\n  }\n  echo \"ARTICLES_COPIED\\n\";\n}\necho \"plugins=\".implode(\",\", array_values(array_diff(scandir('/wordpress/wp-content/plugins'), [\".\",\"..\"]))).\"\\n\";\nrequire_once '/wordpress/wp-load.php';\nputenv('GG_ADMIN_PASS=N9F52WNZfSKNN607');\nputenv('GG_LEARNER_PASS=RKxnA1pNHvD39bt5');\n$_ENV['GG_ADMIN_PASS']='N9F52WNZfSKNN607';\n$_ENV['GG_LEARNER_PASS']='RKxnA1pNHvD39bt5';\ntry {\n  if (function_exists('gg_seed_run')) {\n    delete_option('gg_seed_version');\n    gg_seed_run();\n    if (function_exists('gg_seed_refresh_home')) { gg_seed_refresh_home(); }\n    update_option('gg_seed_version', defined('GG_SEED_VERSION') ? GG_SEED_VERSION : '1.2.0');\n    $ids=get_option('gg_seed_ids');\n    echo 'SEED_OK articles='.(isset($ids['articles'])?count((array)$ids['articles']):0).\"\\n\";\n  } else {\n    echo \"SEED_MISSING\\n\";\n  }\n} catch (Throwable $e) {\n  echo 'SEED_ERR='.$e->getMessage().' @ '.$e->getFile().':'.$e->getLine().\"\\n\";\n}\n"
     },
     {
       "step": "setSiteOptions",
@@ -134,6 +149,11 @@
         "woocommerce_coming_soon": "no",
         "woocommerce_currency": "THB"
       }
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/gg-probe.php",
+      "data": "<?php require \"/wordpress/wp-load.php\"; header(\"Content-Type: text/plain; charset=utf-8\"); echo \"probe\\n\"; $ids=get_option(\"gg_seed_version\"); echo \"version=\".$ids.\"\\n\"; $p=get_page_by_path(\"home-gg\"); echo $p?(\"home=\".$p->ID.\"\\n\"):\"no-home\\n\"; echo \"posts=\".wp_count_posts()->publish.\"\\n\"; echo function_exists(\"pll_languages_list\")?(\"langs=\".implode(\",\",pll_languages_list()).\"\\n\"):\"no-pll\\n\";"
     },
     {
       "step": "login",
