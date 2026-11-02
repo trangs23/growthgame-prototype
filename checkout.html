@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เช็คเอาต์ | Growth Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=tanker@400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="ci/logomark-deepblue-web.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="mock-bar">พรีวิวหน้าเดิมของ growthgame.co (ยังไม่ใช่เว็บจริง) · ราคา/ปกที่ยังไม่ยืนยัน = <b>ตัวอย่าง</b></div>
+<header>
+ <div class="wrap nav">
+  <a class="brand" href="index.html"><img src="ci/logo-primary-deepblue-web.png" alt="Growth Game"></a>
+  <ul class="menu"><li><a href="index.html">หน้าแรก</a></li><li><a href="about.html">เกี่ยวกับ</a></li><li><a href="articles.html">บทความ</a></li><li><a href="coming-soon.html">คอร์สออนไลน์</a></li><li><a href="coming-soon.html">กิจกรรม</a></li><li><a href="shop.html" class="active">ร้านค้า</a></li><li><a href="contact.html">ติดต่อ</a></li></ul>
+  <nav class="lang-switch" aria-label="ภาษา"><a href="checkout.html" class="active" lang="th">TH</a><a href="en/checkout.html" lang="en">EN</a></nav>
+  <a class="cart-btn" href="cart.html" title="ตะกร้า">🛒<span class="cart-count" data-cart-count>0</span></a>
+  <button class="burger" aria-label="menu">☰</button>
+ </div>
+</header>
+
+<main>
+<div class="page-hero"><div class="wrap">
+ <div class="crumb"><a href="index.html">หน้าแรก</a> / <a href="shop.html">ร้านค้า</a> / เช็คเอาต์</div>
+ <h1>เช็คเอาต์ <span class="tag">เดโม</span></h1>
+ <p>ไม่มีเพย์เมนต์จริง · กดยืนยันแล้วได้แค่ toast</p>
+</div></div>
+<section><div class="wrap grid g2">
+ <div class="card">
+  <h3>ที่อยู่จัดส่ง (ของกายภาพ)</h3>
+  <form class="form" onsubmit="event.preventDefault();ggToast('เดโมเท่านั้น — ไม่สร้างออเดอร์จริง');">
+   <label>ชื่อ <input required placeholder="ชื่อผู้รับ"></label>
+   <label>ที่อยู่ <textarea rows="3" required placeholder="ที่อยู่จัดส่ง"></textarea></label>
+   <label>โทร <input required placeholder="08x-xxx-xxxx"></label>
+   <p class="hint">ไฟล์ดิจิทัลไม่ต้องรอส่ง — ได้ลิงก์หลังชำระเงิน (บนเว็บจริง)</p>
+   <button class="btn btn-accent" type="submit">ยืนยันออเดอร์ (ม็อก)</button>
+  </form>
+ </div>
+ <div class="card" style="background:var(--deep);color:#fff;border:0">
+  <div class="en" style="color:var(--lblue)">ORDER SUMMARY</div>
+  <h3 style="color:#fff;margin-top:8px">สรุปออเดอร์ <span class="tag">ตัวอย่าง</span></h3>
+  <ul class="meta" style="margin-top:12px;color:var(--lgray)">
+   <li>หนังสือเล่ม 2 × 1 — ฿220 (ตัวอย่าง)</li>
+   <li>Canvas Template × 1 — ราคา (ตัวอย่าง)</li>
+   <li>ค่าส่ง — ตัวอย่าง</li>
+  </ul>
+  <p style="margin-top:16px;color:var(--yellow)">ไม่ตัดบัตร · ไม่เก็บข้อมูลในพรีวิวนี้</p>
+  <a class="btn btn-ghost" href="cart.html" style="margin-top:12px">กลับตะกร้า</a>
+ </div>
+</div></section>
+</main>
+<footer>
+ <div class="wrap foot">
+  <div class="foot-brand">
+   <img src="ci/logo-primary-lightgray-web.png" alt="Growth Game">
+   <div class="en">MOVE WITH MOTIVATION</div>
+   <small>Growth Game Co., Ltd. · Nonthaburi · growthgame.co</small>
+   <small>พรีวิวหน้าเดิม — ยังไม่แตะเว็บจริง · การชำระเงินเป็นเดโม</small>
+  </div>
+  <div class="foot-links"><a href="index.html">หน้าแรก</a><a href="about.html">เกี่ยวกับ</a><a href="articles.html">บทความ</a><a href="coming-soon.html">คอร์สออนไลน์</a><a href="coming-soon.html">กิจกรรม</a><a href="shop.html">ร้านค้า</a><a href="contact.html">ติดต่อ</a></div>
+ </div>
+</footer>
+<script src="app.js"></script>
+</body></html>

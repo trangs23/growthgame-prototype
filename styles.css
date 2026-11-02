@@ -346,4 +346,15 @@ footer{padding:36px 0;color:var(--lgray);font-size:13px;background:var(--deep);m
 .gg-achieve .msg{font-size:14px;line-height:1.35}
 @media (max-width:640px){.soon-card{padding:28px 18px}.soon-card h1{font-size:22px}.soon-mush{width:104px;height:104px}.soon-line{font-size:15px;min-height:3.6em}}
 
-
+/* Shop polish */
+.shop-cover{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;display:block;margin-bottom:12px;background:#1a2450;border:1px solid rgba(143,208,234,.25)}
+.shop-cover.wide,.product-cover.wide{aspect-ratio:4/3}
+.product-cover{width:100%;max-width:360px;border-radius:14px;display:block;margin:0 auto;border:1px solid rgba(19,32,66,.12);box-shadow:0 10px 28px rgba(19,32,66,.12)}
+.cover-credit{font-size:11px;color:var(--muted);text-align:center;margin-top:8px}
+.shop-sec{font-size:18px;margin:28px 0 14px;color:var(--deep)}
+.shop-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.shop-foot-note{margin-top:28px;font-size:13px;color:var(--muted)}
+.cart-table .cart-row{display:grid;grid-template-columns:2.2fr 1fr .6fr .8fr;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;align-items:center}
+.cart-table .cart-row.head{font-weight:600;color:var(--muted);border-bottom:2px solid var(--line)}
+.cart-total{display:flex;justify-content:space-between;padding-top:14px;font-weight:600;font-size:16px}
+@media (max-width:640px){.cart-table .cart-row{grid-template-columns:1fr 1fr;gap:6px}.cart-table .cart-row.head{display:none}}
