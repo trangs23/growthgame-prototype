@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Growth Game Seed (ตัวอย่าง)
  * Description: Seeds demo courses, shop products, pages, and users for the Growth Game WordPress test site. Idempotent.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Growth Game Co., Ltd. (test)
  */
 
@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GG_SEED_VERSION', '1.0.0' );
+define( 'GG_SEED_VERSION', '1.1.0' );
 define( 'GG_SEED_OPTION', 'gg_seed_version' );
 
 add_action( 'init', 'gg_seed_maybe_run', 30 );
@@ -33,7 +33,12 @@ function gg_seed_run() {
 	gg_seed_configure_tutor();
 	gg_seed_users();
 	$media = gg_seed_media();
+	update_option( 'gg_seed_ids', array( 'media' => $media ) );
 	$pages = gg_seed_pages();
+	wp_update_post( array(
+		'ID'           => $pages['home'],
+		'post_content' => gg_seed_home_content( $media ),
+	) );
 	$courses = gg_seed_courses( $media );
 	$products = gg_seed_shop_products( $media );
 	gg_seed_menus_and_front( $pages );
@@ -171,12 +176,15 @@ function gg_seed_users() {
 function gg_seed_media() {
 	$ids = array();
 	$upload = wp_upload_dir();
-	$src_pdf = '/wordpress/wp-content/uploads/gg-seed/sample-canvas.pdf';
-	// Prefer files written by blueprint into uploads.
 	$candidates = array(
-		'pdf'  => array( $upload['basedir'] . '/gg-seed/sample-canvas.pdf', ABSPATH . 'wp-content/uploads/gg-seed/sample-canvas.pdf' ),
-		'logo' => array( $upload['basedir'] . '/gg-seed/logo.png', ABSPATH . 'wp-content/uploads/gg-seed/logo.png' ),
+		'pdf'          => array( $upload['basedir'] . '/gg-seed/sample-canvas.pdf', ABSPATH . 'wp-content/uploads/gg-seed/sample-canvas.pdf' ),
+		'logo'         => array( $upload['basedir'] . '/gg-seed/logo.png', ABSPATH . 'wp-content/uploads/gg-seed/logo.png' ),
+		'hero'         => array( $upload['basedir'] . '/gg-seed/hero-notebook.jpeg', ABSPATH . 'wp-content/uploads/gg-seed/hero-notebook.jpeg' ),
+		'portrait'     => array( $upload['basedir'] . '/gg-seed/portrait-trang.jpeg', ABSPATH . 'wp-content/uploads/gg-seed/portrait-trang.jpeg' ),
+		'svc_game'     => array( $upload['basedir'] . '/gg-seed/service-gamification.jpeg', ABSPATH . 'wp-content/uploads/gg-seed/service-gamification.jpeg' ),
+		'svc_strategy' => array( $upload['basedir'] . '/gg-seed/service-strategy.jpeg', ABSPATH . 'wp-content/uploads/gg-seed/service-strategy.jpeg' ),
 	);
+	require_once ABSPATH . 'wp-admin/includes/image.php';
 	foreach ( $candidates as $key => $paths ) {
 		foreach ( $paths as $path ) {
 			if ( file_exists( $path ) ) {
@@ -189,7 +197,6 @@ function gg_seed_media() {
 				);
 				$attach_id = wp_insert_attachment( $attachment, $path );
 				if ( ! is_wp_error( $attach_id ) ) {
-					require_once ABSPATH . 'wp-admin/includes/image.php';
 					$meta = wp_generate_attachment_metadata( $attach_id, $path );
 					wp_update_attachment_metadata( $attach_id, $meta );
 					$ids[ $key ] = $attach_id;
@@ -217,69 +224,96 @@ function gg_seed_page( $title, $slug, $content, $template = '' ) {
 	return $id;
 }
 
-function gg_seed_pages() {
-	$home = gg_seed_page(
-		'หน้าแรก',
-		'home-gg',
-		'<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"60px","bottom":"60px"}},"color":{"background":"#132042"}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull has-background" style="background-color:#132042;padding-top:60px;padding-bottom:60px"><!-- wp:paragraph {"style":{"color":{"text":"#8FD0EA"},"typography":{"fontSize":"14px","letterSpacing":"0.12em","textTransform":"uppercase","fontWeight":"600"}}} -->
-<p class="has-text-color" style="color:#8FD0EA;font-size:14px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase">MOVE WITH MOTIVATION · ตัวอย่าง</p>
+function gg_seed_home_content( $media = null ) {
+	if ( null === $media ) {
+		$stored = get_option( 'gg_seed_ids', array() );
+		$media  = isset( $stored['media'] ) ? $stored['media'] : array();
+	}
+	$portrait_url  = ! empty( $media['portrait'] ) ? wp_get_attachment_url( $media['portrait'] ) : '/wp-content/uploads/gg-seed/portrait-trang.jpeg';
+	$svc_game_url  = ! empty( $media['svc_game'] ) ? wp_get_attachment_url( $media['svc_game'] ) : '/wp-content/uploads/gg-seed/service-gamification.jpeg';
+	$svc_strat_url = ! empty( $media['svc_strategy'] ) ? wp_get_attachment_url( $media['svc_strategy'] ) : '/wp-content/uploads/gg-seed/service-strategy.jpeg';
+	$hero_url      = ! empty( $media['hero'] ) ? wp_get_attachment_url( $media['hero'] ) : '/wp-content/uploads/gg-seed/hero-notebook.jpeg';
+
+	$portrait_id  = ! empty( $media['portrait'] ) ? (int) $media['portrait'] : 0;
+	$svc_game_id  = ! empty( $media['svc_game'] ) ? (int) $media['svc_game'] : 0;
+	$svc_strat_id = ! empty( $media['svc_strategy'] ) ? (int) $media['svc_strategy'] : 0;
+	$hero_id      = ! empty( $media['hero'] ) ? (int) $media['hero'] : 0;
+
+	return '<!-- wp:cover {"url":"' . esc_url( $hero_url ) . '","id":' . $hero_id . ',"dimRatio":55,"minHeight":300,"align":"full"} -->
+<div class="wp-block-cover alignfull" style="min-height:300px"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-50 has-background-dim" style="background-color:#132042"></span><img class="wp-block-cover__image-background wp-image-' . $hero_id . '" alt="" src="' . esc_url( $hero_url ) . '" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"14px","letterSpacing":"0.12em","textTransform":"uppercase","fontWeight":"600"},"color":{"text":"#8FD0EA"}}} -->
+<p class="has-text-align-center has-text-color" style="color:#8FD0EA;font-size:14px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase">MOVE WITH MOTIVATION</p>
 <!-- /wp:paragraph -->
+<!-- wp:heading {"textAlign":"center","level":1,"style":{"color":{"text":"#ffffff"},"typography":{"fontSize":"40px","lineHeight":"1.25"}}} -->
+<h1 class="wp-block-heading has-text-align-center has-text-color" style="color:#ffffff;font-size:40px;line-height:1.25">Gamification &amp; Strategic Planning</h1>
+<!-- /wp:heading --></div></div>
+<!-- /wp:cover -->
 
-<!-- wp:heading {"level":1,"style":{"color":{"text":"#ffffff"},"typography":{"fontSize":"42px","lineHeight":"1.25"}}} -->
-<h1 class="wp-block-heading has-text-color" style="color:#ffffff;font-size:42px;line-height:1.25">ออกแบบแรงจูงใจด้วยกลไกเกม<br>ให้คนอยากทำ และองค์กรไปถึงเป้าหมาย</h1>
-<!-- /wp:heading -->
+<!-- wp:columns {"style":{"spacing":{"padding":{"top":"40px","bottom":"20px"}}}} -->
+<div class="wp-block-columns" style="padding-top:40px;padding-bottom:20px"><!-- wp:column {"width":"33.33%"} -->
+<div class="wp-block-column" style="flex-basis:33.33%"><!-- wp:image {"id":' . $portrait_id . ',"sizeSlug":"large","linkDestination":"none","className":"is-style-rounded"} -->
+<figure class="wp-block-image size-large is-style-rounded"><img src="' . esc_url( $portrait_url ) . '" alt="Trang Suwannasilp" class="wp-image-' . $portrait_id . '"/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
 
-<!-- wp:paragraph {"style":{"color":{"text":"#ECECEE"}}} -->
-<p class="has-text-color" style="color:#ECECEE">Growth Game โดย ตรัง สุวรรณศิลป์ — ที่ปรึกษาเกมมิฟิเคชันและกลยุทธ์ · สำเนาทดสอบ WordPress (ไม่ใช่เว็บจริง)</p>
+<!-- wp:column {"width":"66.66%","verticalAlignment":"center"} -->
+<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:66.66%"><!-- wp:paragraph -->
+<p><em>Gamification and strategic planning are two of my greatest passions.</em></p>
 <!-- /wp:paragraph -->
-
+<!-- wp:paragraph -->
+<p><em>The two may appear to be unrelated at first, but they actually complement each other.</em></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph -->
+<p><em>Strategic planning helps set directions and goals, while gamification helps achieve goals in a fun way!</em></p>
+<!-- /wp:paragraph -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button {"style":{"color":{"background":"#DDD94A","text":"#132042"}}} -->
 <div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="/courses/" style="color:#132042;background-color:#DDD94A">ดูคอร์สเรียน →</a></div>
 <!-- /wp:button -->
-
-<!-- wp:button {"className":"is-style-outline","style":{"color":{"text":"#8FD0EA"}}} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link has-text-color wp-element-button" href="/shop/" style="color:#8FD0EA">ร้านค้า / หนังสือ →</a></div>
+<!-- wp:button {"className":"is-style-outline","style":{"color":{"text":"#5D68D8"}}} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link has-text-color wp-element-button" href="#contact" style="color:#5D68D8">Get in Touch</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
-<!-- /wp:group -->
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
 
-<!-- wp:heading -->
-<h2 class="wp-block-heading">เราช่วยอะไรได้บ้าง</h2>
+<!-- wp:heading {"anchor":"services"} -->
+<h2 class="wp-block-heading" id="services">Services</h2>
 <!-- /wp:heading -->
 
 <!-- wp:columns -->
 <div class="wp-block-columns"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">ที่ปรึกษาเกมมิฟิเคชัน</h3>
+<div class="wp-block-column"><!-- wp:image {"id":' . $svc_game_id . ',"width":"120px","height":"120px","scale":"cover","sizeSlug":"medium","linkDestination":"none","className":"is-style-rounded"} -->
+<figure class="wp-block-image size-medium is-resized is-style-rounded"><img src="' . esc_url( $svc_game_url ) . '" alt="" class="wp-image-' . $svc_game_id . '" style="aspect-ratio:1;object-fit:cover;width:120px;height:120px"/></figure>
+<!-- /wp:image -->
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Gamification</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>ออกแบบระบบแรงจูงใจให้ทีม/องค์กร เปลี่ยนพฤติกรรมที่อยากเห็นให้เกิดขึ้นจริง</p>
+<p>Customized Gamification training and workshops for individuals, startups, and companies.</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph -->
+<p>Consulting services for companies interested in Gamification, including Gamification for performance management and Gamification for human resource management.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">อบรม &amp; คอร์ส</h3>
+<div class="wp-block-column"><!-- wp:image {"id":' . $svc_strat_id . ',"width":"120px","height":"120px","scale":"cover","sizeSlug":"medium","linkDestination":"none","className":"is-style-rounded"} -->
+<figure class="wp-block-image size-medium is-resized is-style-rounded"><img src="' . esc_url( $svc_strat_url ) . '" alt="" class="wp-image-' . $svc_strat_id . '" style="aspect-ratio:1;object-fit:cover;width:120px;height:120px"/></figure>
+<!-- /wp:image -->
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Strategic Planning</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>คลาสสด + คอร์สออนไลน์ มีใบรับรองและระบบแต้ม/แบดจ์ · <a href="/courses/">ดูคอร์ส</a></p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">วางแผนกลยุทธ์ส่วนบุคคล</h3>
-<!-- /wp:heading -->
+<p>Strategic planning consulting services to businesses, with a focus on small and medium-sized enterprises (SMEs).</p>
+<!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p>Personal Strategy — วางเป้าหมายชีวิต/อาชีพด้วยกรอบคิดที่ชัด</p>
+<p>Our goal is to train companies on how to develop their own strategic planning processes so that they no longer need to rely on consultants in the future.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
 
-<!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column {"style":{"border":{"color":"#5D68D8","width":"2px"},"spacing":{"padding":{"top":"24px","right":"24px","bottom":"24px","left":"24px"}}}} -->
+<!-- wp:columns {"style":{"spacing":{"padding":{"top":"24px","bottom":"24px"}}}} -->
+<div class="wp-block-columns" style="padding-top:24px;padding-bottom:24px"><!-- wp:column {"style":{"border":{"color":"#5D68D8","width":"2px"},"spacing":{"padding":{"top":"24px","right":"24px","bottom":"24px","left":"24px"}}}} -->
 <div class="wp-block-column has-border-color" style="border-color:#5D68D8;border-width:2px;padding-top:24px;padding-right:24px;padding-bottom:24px;padding-left:24px"><!-- wp:paragraph {"style":{"color":{"text":"#5D68D8"},"typography":{"fontWeight":"600","letterSpacing":"0.08em","textTransform":"uppercase","fontSize":"12px"}}} -->
 <p class="has-text-color" style="color:#5D68D8;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase">WEB APP</p>
 <!-- /wp:paragraph -->
@@ -310,15 +344,64 @@ function gg_seed_pages() {
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
 
-<!-- wp:heading {"anchor":"contact"} -->
-<h2 class="wp-block-heading" id="contact">ติดต่อ</h2>
+<!-- wp:heading -->
+<h2 class="wp-block-heading">คอร์ส &amp; กิจกรรม</h2>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>อีเมลตัวอย่าง: hello@growthgame.test · โทรตัวอย่าง: 02-000-0000 · นี่คือสำเนาทดสอบ</p>
-<!-- /wp:paragraph -->'
+<p>ดูคอร์สออนไลน์และคลาสสดได้ที่ <a href="/courses/">หน้าคอร์สเรียน</a> และ <a href="/events/">กิจกรรม</a> — ราคาและรอบเป็นตัวอย่างจนกว่าคุณตรังจะยืนยัน</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">ผลงาน / บทความ</h2>
+<!-- /wp:heading -->
+<!-- wp:paragraph -->
+<p>พอร์ตโฟลิโอและบทความเก่ายังเป็นตัวอย่าง — จะย้ายจากเว็บจริงในเฟสถัดไป · <a href="/portfolio/">ผลงาน</a> · <a href="/articles/">บทความ</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"anchor":"contact","style":{"color":{"background":"#132042"},"spacing":{"padding":{"top":"40px","bottom":"40px","left":"28px","right":"28px"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" id="contact" style="background-color:#132042;padding-top:40px;padding-right:28px;padding-bottom:40px;padding-left:28px"><!-- wp:heading {"style":{"color":{"text":"#ffffff"}}} -->
+<h2 class="wp-block-heading has-text-color" style="color:#ffffff" id="get-in-touch">Get in Touch</h2>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"style":{"color":{"text":"#ECECEE"}}} -->
+<p class="has-text-color" style="color:#ECECEE">Discover how gamification and strategic planning can help you achieve your goals.</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"color":{"text":"#8FD0EA"}}} -->
+<p class="has-text-color" style="color:#8FD0EA">Channels: <a href="https://web.facebook.com/GrowthGameIdea">Facebook</a> · <a href="https://www.youtube.com/channel/UCsEg65aHlNVERAZ1H2_Cj2A/featured">YouTube</a> · <a href="https://www.goodreads.com/author/show/21656276._">Goodreads</a> · <a href="https://www.blockdit.com/pages/600d1f1c393e750cdef0bc86">Blockdit</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button {"style":{"color":{"background":"#DDD94A","text":"#132042"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="/contact/" style="color:#132042;background-color:#DDD94A">ติดต่อ</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:group -->';
+}
+
+function gg_seed_refresh_home() {
+	$media  = gg_seed_media();
+	$stored = get_option( 'gg_seed_ids', array() );
+	if ( ! is_array( $stored ) ) {
+		$stored = array();
+	}
+	$stored['media'] = isset( $stored['media'] ) && is_array( $stored['media'] ) ? array_merge( $stored['media'], $media ) : $media;
+	update_option( 'gg_seed_ids', $stored );
+	$content = gg_seed_home_content( $stored['media'] );
+	gg_seed_page( 'หน้าแรก', 'home-gg', $content );
+	$home = get_page_by_path( 'home-gg' );
+	if ( $home ) {
+		update_option( 'show_on_front', 'page' );
+		update_option( 'page_on_front', $home->ID );
+	}
+}
+
+function gg_seed_pages() {
+	$home = gg_seed_page(
+		'หน้าแรก',
+		'home-gg',
+		gg_seed_home_content()
 	);
 
-	$services = gg_seed_page( 'บริการ', 'services', '<!-- wp:heading --><h2>บริการ</h2><!-- /wp:heading --><!-- wp:paragraph --><p>ที่ปรึกษาเกมมิฟิเคชัน · อบรม · วางแผนกลยุทธ์ส่วนบุคคล · <strong>ตัวอย่าง</strong></p><!-- /wp:paragraph -->' );
+	$services = gg_seed_page( 'บริการ', 'services', '<!-- wp:heading --><h2 class="wp-block-heading">Services</h2><!-- /wp:heading --><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">Gamification</h3><!-- /wp:heading --><!-- wp:paragraph --><p>Customized Gamification training and workshops for individuals, startups, and companies.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>Consulting services for companies interested in Gamification, including Gamification for performance management and Gamification for human resource management.</p><!-- /wp:paragraph --><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">Strategic Planning</h3><!-- /wp:heading --><!-- wp:paragraph --><p>Strategic planning consulting services to businesses, with a focus on small and medium-sized enterprises (SMEs).</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>Our goal is to train companies on how to develop their own strategic planning processes so that they no longer need to rely on consultants in the future.</p><!-- /wp:paragraph -->' );
+
 	$courses_page = gg_seed_page( 'คอร์สเรียน', 'courses', '<!-- wp:heading --><h2>คอร์สเรียน &amp; คลาสสด</h2><!-- /wp:heading --><!-- wp:paragraph --><p>เรียนออนไลน์ได้ Certificate + แต้ม/แบดจ์ · เนื้อหาเป็นตัวอย่าง</p><!-- /wp:paragraph --><!-- wp:shortcode -->[tutor_course]<!-- /wp:shortcode -->' );
 	$events = gg_seed_page( 'กิจกรรม', 'events', '<!-- wp:heading --><h2>กิจกรรม</h2><!-- /wp:heading --><!-- wp:paragraph --><p>คลาสสด Essentials / Masterclass ตามรอบปี · <strong>ตัวอย่าง</strong> — ยังไม่เปิดลงทะเบียนจริงบนสำเนานี้</p><!-- /wp:paragraph --><!-- wp:list --><ul><li>Gamification Essentials (onsite) — ตัวอย่างราคา 5,990–6,990 บาท</li><li>Masterclass — เร็วๆ นี้</li></ul><!-- /wp:list -->' );
 	$work = gg_seed_page( 'ผลงาน', 'portfolio', '<!-- wp:heading --><h2>ผลงาน</h2><!-- /wp:heading --><!-- wp:paragraph --><p>พอร์ตโฟลิโอยังเป็นตัวอย่าง — จะดึงจากทีม Sales &amp; Proposal ภายหลัง</p><!-- /wp:paragraph -->' );
@@ -747,5 +830,9 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		gg_seed_run();
 		update_option( GG_SEED_OPTION, GG_SEED_VERSION );
 		WP_CLI::success( 'Growth Game seed complete' );
+	} );
+	WP_CLI::add_command( 'gg-seed-home', function () {
+		gg_seed_refresh_home();
+		WP_CLI::success( 'Home refreshed from live content' );
 	} );
 }

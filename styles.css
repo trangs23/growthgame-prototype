@@ -268,3 +268,9 @@ footer{padding:36px 0;color:var(--lgray);font-size:13px;background:var(--deep);m
 @media (max-width:640px){
   .steps3{grid-template-columns:1fr}
 }
+
+/* live home merge */
+.hero-live .live-quote{font-size:15px;margin:0 0 10px;max-width:560px;color:var(--lgray)}
+.hero-live .live-quote:last-of-type{margin-bottom:22px}
+.service-live .svc-img{width:96px;height:96px;object-fit:cover;border-radius:50%;margin-bottom:14px;border:3px solid var(--lilac)}
+.service-live h3{font-size:20px;margin-bottom:10px}
