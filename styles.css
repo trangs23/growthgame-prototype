@@ -358,3 +358,38 @@ footer{padding:36px 0;color:var(--lgray);font-size:13px;background:var(--deep);m
 .cart-table .cart-row.head{font-weight:600;color:var(--muted);border-bottom:2px solid var(--line)}
 .cart-total{display:flex;justify-content:space-between;padding-top:14px;font-weight:600;font-size:16px}
 @media (max-width:640px){.cart-table .cart-row{grid-template-columns:1fr 1fr;gap:6px}.cart-table .cart-row.head{display:none}}
+
+/* ===== Hormozi v2 ===== */
+.proof-line{font-size:14px;color:var(--lblue);margin:0 0 20px;max-width:560px;line-height:1.55}
+.btn.is-disabled,.btn[aria-disabled="true"]{opacity:.55;pointer-events:none;cursor:not-allowed;filter:grayscale(.15)}
+.freebie-card{display:grid;grid-template-columns:1fr 1.2fr;gap:24px;align-items:center;border:2px dashed var(--lilac);background:linear-gradient(135deg,#fff,var(--lilac-t))}
+.freebie-card .ph-art{aspect-ratio:4/3;border-radius:12px;background:linear-gradient(160deg,var(--deep),var(--violet));display:grid;place-items:center;color:#fff;position:relative;overflow:hidden}
+.freebie-card .ph-art:before{content:"";position:absolute;inset:0;background:url(ci/mushroom-main-2-web.png) center/55% no-repeat;opacity:.15}
+.freebie-card .ph-art > *{position:relative;z-index:1;text-align:center;padding:16px}
+.freebie-card .ph-art .en{color:var(--yellow);font-size:18px}
+.strategy-band{background:var(--violet);color:#fff;border:0;padding:36px 40px;display:grid;grid-template-columns:1.4fr .6fr;gap:24px;align-items:center}
+.strategy-band h2{margin:0 0 8px;font-size:24px;color:#fff}
+.strategy-band p{margin:0;color:var(--lgray);font-size:15px}
+.strategy-band .en{color:var(--lblue);font-size:16px;margin-bottom:6px}
+.fit-note{font-size:13px;color:var(--muted);background:var(--lgray);border-left:3px solid var(--lilac);padding:10px 14px;border-radius:0 10px 10px 0;margin-top:12px}
+.proof-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.proof-list li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted)}
+.proof-list li:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--lilac);margin-top:7px;flex:none}
+.book-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
+.book-item{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.book-item img{width:72px;height:96px;object-fit:cover;border-radius:6px;background:var(--deep)}
+.book-item h4{margin:0 0 4px;font-size:14px;font-weight:500;color:var(--deep);line-height:1.35}
+.book-item .yr{font-size:12px;color:var(--muted)}
+.cardset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
+.cardset-grid .card{padding:14px}
+.cardset-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;margin-bottom:10px;background:var(--deep)}
+.cert-ph-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.cert-ph{aspect-ratio:4/3;border:2px dashed var(--line);border-radius:12px;display:grid;place-items:center;text-align:center;padding:16px;background:var(--lgray);color:var(--muted);font-size:13px}
+.cred-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(143,208,234,.12);border:1px solid rgba(143,208,234,.4);padding:6px 12px;border-radius:999px;font-size:13px;color:var(--lgray);margin:0 6px 6px 0}
+@media (max-width:800px){
+  .freebie-card,.strategy-band,.book-grid{grid-template-columns:1fr}
+  .cardset-grid,.cert-ph-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:480px){
+  .cardset-grid,.cert-ph-grid{grid-template-columns:1fr}
+}
